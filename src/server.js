@@ -42,7 +42,7 @@ app.get('/test-error', () => {
   throw new Error('Simulated server error');
 });
 
-// MIDDLEWARES
+// MIDDLEWARES - errorhandling
 
 app.use((req, res) => {
   res.status(404).json({ message: 'Route not found' });

@@ -33,16 +33,18 @@ app.get('/notes', (req, res) => {
   });
 });
 
-app.get('/notes/:noteID', (req, res) => {
-  const id_param = req.params.noteID;
-  res.status(200).json(`Retrieved note with ID: ${id_param}`);
+app.get('/notes/:noteId', (req, res) => {
+  const id_param = req.params.noteId;
+  res.status(200).json({
+    message: `Retrieved note with ID: ${id_param}`
+  });
 });
 
 app.get('/test-error', () => {
   throw new Error('Simulated server error');
 });
 
-// MIDDLEWARES
+// MIDDLEWARES - errorhandling
 
 app.use((req, res) => {
   res.status(404).json({ message: 'Route not found' });

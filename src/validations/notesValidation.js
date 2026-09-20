@@ -23,7 +23,7 @@ export const getAllNotesSchema = {
       "number.max": "The amount of notes per page cannot exceed {#limit}",
       "any.required": "Amount of notes per page is required",
     }),
-    tag: Joi.string().valid(TAGS),
+    tag: Joi.string().valid(...TAGS),
     search : Joi.string().trim().allow(""),
   }),
 };
@@ -35,7 +35,7 @@ export const createNoteSchema = {
       "any.required": "Title is required",
     }),
     content: Joi.string(),
-    tag: Joi.string().valid(TAGS),
+    tag: Joi.string().valid(...TAGS),
   })
 };
 

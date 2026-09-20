@@ -6,8 +6,14 @@ const objectIdValidator = (value, helpers) => {
   return !isValidObjectId(value) ? helpers.message('Invalid id format') : value;
 };
 
+export const noteIdSchema = {
+  [Segments.PARAMS]: Joi.object({
+    noteId: Joi.string().custom(objectIdValidator).required(),
+  }),
+};
+
 export const getAllNotesSchema = {
-  [Segments.BODY]: Joi.object({
+  [Segments.QUERY]: Joi.object({
     page: Joi.number().integer().min(1).required().default(1).messages({
       "number.min": "Page must be at least 1",
       "any.required": "Page is required",
@@ -18,13 +24,7 @@ export const getAllNotesSchema = {
       "any.required": "Amount of notes per page is required",
     }),
     tag: Joi.string().valid(TAGS),
-    search : Joi.string(),
-  }),
-};
-
-export const noteIdSchema = {
-  [Segments.PARAMS]: Joi.object({
-    noteId: Joi.string().custom(objectIdValidator).required(),
+    search : Joi.string().trim().allow(""),
   }),
 };
 
@@ -40,15 +40,15 @@ export const createNoteSchema = {
 };
 
 export const updateNoteSchema = {
-  [Segments.PARAMS]: Joi.object({
-    noteId: Joi.string().custom(objectIdValidator).required(),
-  }),
+  ...noteIdSchema,
+
   [Segments.BODY]: Joi.object({
-    title: Joi.string().min(1).required().messages({
-      "string.min": "Title must be at least 1 character long",
-      "any.required": "Title is required",
-    }),
-    content: Joi.string(),
-    tag: Joi.string().valid(TAGS),
+    title: Joi.string().min(1),
+    content: Joi.string().allow(''),
+    tag: Joi.string().valid(...TAGS),
   })
+    .min(1)
+    .messages({
+      "object.min": "Request body must contain at least one of: title, content, tag",
+    }),
 };

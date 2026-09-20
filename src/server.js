@@ -26,10 +26,6 @@ app.use(cors());
 
 app.use(notesRoutes);
 
-app.get('/test-error', () => {
-  throw new Error('Simulated server error');
-});
-
 // MIDDLEWARES - errorhandling
 
 app.use(notFoundHandler);

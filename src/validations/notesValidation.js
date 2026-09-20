@@ -34,7 +34,7 @@ export const createNoteSchema = {
       "string.min": "Title must be at least 1 character long",
       "any.required": "Title is required",
     }),
-    content: Joi.string(),
+    content: Joi.string().allow(''),
     tag: Joi.string().valid(...TAGS),
   })
 };

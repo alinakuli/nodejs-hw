@@ -3,6 +3,7 @@ import express from 'express';
 import 'dotenv/config';
 import cors from 'cors';
 import { errors } from "celebrate";
+import cookieParser from "cookie-parser";
 
 
 
@@ -22,6 +23,7 @@ await connectMongoDB();
 app.use(logger);
 app.use(express.json());
 app.use(cors());
+app.use(cookieParser());
 
 // ROUTES
 
